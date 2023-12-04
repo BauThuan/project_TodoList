@@ -14,7 +14,6 @@ function ModalDelete(props) {
       },
     })
       .then((res) => {
-        console.log(">>> chay vao then res");
         let local = JSON.parse(localStorage.getItem("data"));
         if (local.find((element) => element.id === deleteItem.id)) {
           handleHideModalDelete();
