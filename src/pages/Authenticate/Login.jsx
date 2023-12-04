@@ -17,7 +17,7 @@ function Login() {
     let key = event.target.getAttribute("name");
     setInfo({ ...info, [key]: event.target.value });
   };
-  const handleLogin = async () => {
+  const handleLogin = () => {
     const { identifier, password } = info;
     if (!identifier.trim()) {
       toast.error("Vui lòng điền đầy đủ email !");

@@ -64,13 +64,7 @@ function App() {
         if (res?.data?.data && res.data.data.length > 0) {
           setData(res.data.data);
         } else {
-          setData([
-            {
-              attributes: {
-                title: "Không tìm thấy title nào!",
-              },
-            },
-          ]);
+          setData([]);
         }
       })
       .catch((error) => {
@@ -103,7 +97,7 @@ function App() {
         </div>
         {localStorage.getItem("token") ? (
           <div className="app_list">
-            {data.length > 0 &&
+            {data.length > 0 ? (
               data.map((item, index) => {
                 return (
                   <div key={`index ${index}`} className="list_todo">
@@ -128,7 +122,12 @@ function App() {
                     </div>
                   </div>
                 );
-              })}
+              })
+            ) : (
+              <div style={{ fontSize: "1.7rem" }}>
+                Không tìm thấy title nào !
+              </div>
+            )}
             <div className="panigation">
               {[...Array(totalPage).keys(totalPage)].map((page, index) => {
                 return (
