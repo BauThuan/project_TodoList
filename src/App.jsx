@@ -61,7 +61,17 @@ function App() {
       url: `https://backoffice.nodemy.vn/api/tasks?pagination[page]=1&pagination[pageSize]=5&filters[title][$contains]=${searchTitle}`,
     })
       .then((res) => {
-        setData(res?.data?.data);
+        if (res?.data?.data && res.data.data.length > 0) {
+          setData(res.data.data);
+        } else {
+          setData([
+            {
+              attributes: {
+                title: "Không tìm thấy title nào!",
+              },
+            },
+          ]);
+        }
       })
       .catch((error) => {
         toast.error("Title không tồn tại !");

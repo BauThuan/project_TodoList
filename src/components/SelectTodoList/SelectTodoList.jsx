@@ -9,8 +9,6 @@ function SelectTodoList(props) {
   const { item } = props;
   const [hideIcon, setHideIcon] = useState(<GrCheckboxSelected />);
   useEffect(() => {
-    // useEffect để mỗi khi component mount thì nó kiểm tra xem id nào đã tồn tại trong local rồi
-    //thì đổi lại icon, tránh việc tồn tại rồi nhưng vẫn giữ icon chưa tồn tại
     setHideIcon(
       JSON.parse(localStorage.getItem("data"))?.find(
         (element) => element.id === item.id

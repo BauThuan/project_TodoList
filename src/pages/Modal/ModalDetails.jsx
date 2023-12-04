@@ -4,7 +4,6 @@ import axios from "axios";
 import "../../styles/Modal.scss";
 function ModalDetails(props) {
   const { showModalDetails, handleHideModalDetails, useId } = props;
-  console.log(">> check", useId);
   const [useDetails, setUserDetails] = useState({});
   useEffect(() => {
     axios({
