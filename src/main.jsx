@@ -38,10 +38,6 @@ const router = createBrowserRouter([
     path: "/register",
     element: <Register />,
   },
-  {
-    path: "/modal",
-    element: <ModalDetails />,
-  },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
