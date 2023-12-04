@@ -1,0 +1,75 @@
+.login_container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  height: 97vh;
+  align-items: center;
+  .login_content {
+    width: 30%;
+    .form_login {
+      background-color: #ffffff;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      position: relative;
+      .icons {
+        position: absolute;
+        font-size: 2.5rem;
+        top: 37%;
+        right: 100px;
+        cursor: pointer;
+      }
+      h1 {
+        font-size: 2.5rem;
+        background-image: linear-gradient(135deg, #43cbff 10%, #9708cc 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+      .input_ui {
+        width: 50%;
+        border: none;
+        border-bottom: 2px solid #8c22d3;
+        outline: none;
+        padding: 10px 20px;
+        font-size: 1.6rem;
+        margin-bottom: 10px;
+      }
+      .button_ui {
+        margin-top: 30px;
+        width: 50%;
+        margin-bottom: 10px;
+        cursor: pointer;
+        padding: 10px 20px;
+        outline: none;
+        background-image: linear-gradient(135deg, #43cbff 10%, #9708cc 100%);
+        color: #ffffff;
+        font-size: 1.6rem;
+        font-weight: 600;
+        border-radius: 20px;
+        border: none;
+        &:active {
+          box-shadow: 0px 0px 3px #1b1b1b;
+        }
+      }
+      .titile_notification {
+        font-size: 1.2rem;
+        .resgister_route {
+          cursor: pointer;
+          &:hover {
+            text-decoration: 2px underline;
+          }
+        }
+      }
+      .home_comeback {
+        cursor: pointer;
+        font-size: 1.4rem;
+        margin-bottom: 10px;
+        &:hover {
+          text-decoration: 2px underline;
+        }
+      }
+    }
+  }
+}
