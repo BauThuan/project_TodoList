@@ -45,7 +45,7 @@ function Login() {
         navigate("/home");
       })
       .catch((error) =>
-        toast.error("Thông tin tài khoản hoặc mật khẩu không chính xác !")
+        toast.error("Tài khoản hoặc mật khẩu không chính xác !")
       );
   };
 

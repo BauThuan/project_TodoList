@@ -13,7 +13,7 @@ function Header() {
             <div>
               <img
                 className="avatar"
-                src="https://huets.edu.vn/hinh-nen-girl-xinh-full-hd-cho-laptop/imager_27_5140_700.jpg"
+                src="https://gaixinhbikini.com/wp-content/uploads/2023/02/anh-gai-dep-2k-005.jpg"
               />
               <AiFillCaretDown className="icons_menu" />
               <div className="menu">
