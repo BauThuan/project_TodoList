@@ -29,7 +29,7 @@ function SelectTodoList(props) {
           setHideIcon(<FaRegWindowClose />);
           return localStorage.setItem(
             "data",
-            JSON.stringify([{ ...item, select: false }])
+            JSON.stringify([{ ...item, select: true }])
           );
         }
         if (local.find((element) => element.id === item.id)) {
@@ -37,14 +37,21 @@ function SelectTodoList(props) {
           setHideIcon(<GrCheckboxSelected />);
           return localStorage.setItem(
             "data",
-            JSON.stringify(local.filter((element) => element.id !== item.id))
+            JSON.stringify(
+              local
+                .filter((element) => element.id !== item.id)
+                .map((element) => ({
+                  ...element,
+                  select: false,
+                }))
+            )
           );
         }
         setHideIcon(<FaRegWindowClose />);
         toast.success(`Thêm thành công ${item?.attributes.title}`);
         localStorage.setItem(
           "data",
-          JSON.stringify([...local, { ...item, select: false }])
+          JSON.stringify([...local, { ...item, select: true }])
         );
       }}
     >

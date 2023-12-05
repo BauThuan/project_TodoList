@@ -46,7 +46,7 @@ function App() {
       page: page,
     });
     handleGetApiTodoList();
-  }, [showModal, showModalAddNew, showModalDelete]);
+  }, [showModal, showModalAddNew, showModalDelete, status]);
   const handleHideModalDetails = () => {
     setShowModal(false);
   };
@@ -71,6 +71,7 @@ function App() {
         toast.error("Title không tồn tại !");
       });
   };
+  console.log(">>> check data", data);
   return (
     <>
       <Helmet>
@@ -101,7 +102,7 @@ function App() {
               data.map((item, index) => {
                 return (
                   <div key={`index ${index}`} className="list_todo">
-                    <input type="checkbox" />
+                    <input type="checkbox" checked={item.attributes.complete} />
                     <div className="list_job">{item?.attributes.title}</div>
                     <div className="function_icons">
                       <SelectTodoList item={item} />
