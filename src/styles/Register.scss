@@ -64,3 +64,120 @@
     }
   }
 }
+@media only screen and (max-width: 600px) {
+  .register_container {
+    width: 100%;
+    .register_content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 90%;
+      .form_register {
+        width: 350px;
+        h1 {
+          font-size: 2rem;
+        }
+        .input_ui {
+          width: 60%;
+        }
+        .icons {
+          top: 35%;
+          right: 20%;
+        }
+        .button_ui {
+          margin-top: 10px;
+          font-size: 1.7rem;
+        }
+        .titile_notification {
+          font-size: 1.5rem;
+        }
+        .home_comeback {
+          margin-top: -5px;
+          font-size: 1.6rem;
+          text-decoration: underline;
+          padding-bottom: 5px;
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 601px) and (max-width: 1024px) {
+  .register_container {
+    width: 100%;
+    .register_content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 90%;
+      .form_register {
+        width: 80%;
+        h1 {
+          font-size: 3rem;
+        }
+        .input_ui {
+          width: 60%;
+          font-size: 2.5rem;
+        }
+        .icons {
+          top: 51%;
+          right: 20%;
+        }
+        .button_ui {
+          margin-top: 20px;
+          font-size: 2.5rem;
+        }
+        .titile_notification {
+          font-size: 2.5rem;
+        }
+        .home_comeback {
+          margin-top: 10px;
+          font-size: 2.5rem;
+          text-decoration: underline;
+          padding-bottom: 15px;
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 1025px) {
+  /* Đặt các quy tắc CSS cho desktop ở đây */
+
+  .register_container {
+    width: 100%;
+    .register_content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 90%;
+      .form_register {
+        width: 70%;
+        h1 {
+          font-size: 3rem;
+        }
+        .input_ui {
+          width: 60%;
+          font-size: 2.5rem;
+        }
+        .icons {
+          top: 55%;
+          right: 20%;
+        }
+        .button_ui {
+          margin-top: 10px;
+          font-size: 2rem;
+        }
+        .titile_notification {
+          font-size: 1.5rem;
+        }
+        .home_comeback {
+          margin-top: 10px;
+          font-size: 1.9rem;
+          text-decoration: underline;
+          padding-bottom: 5px;
+        }
+      }
+    }
+  }
+}
