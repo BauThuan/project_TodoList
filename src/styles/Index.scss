@@ -27,6 +27,12 @@
 @media only screen and (min-width: 601px) and (max-width: 1024px) {
   /* Đặt các quy tắc CSS cho tablet ở đây */
   .index_container {
-    width: 95%;
+    width: 98%;
+  }
+}
+
+@media only screen and (min-width: 1025px) {
+  .index_container {
+    width: 70%;
   }
 }

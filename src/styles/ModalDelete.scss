@@ -84,3 +84,42 @@
     }
   }
 }
+
+@media only screen and (max-width: 600px) {
+  .modal {
+    .modal-content {
+      width: 70% !important;
+      p {
+      }
+      .details {
+        width: 80% !important;
+        font-size: 2rem;
+      }
+    }
+    .clearfix {
+      width: 80% !important;
+    }
+  }
+}
+@media only screen and (min-width: 601px) and (max-width: 1024px) {
+  .modal {
+    .modal-content {
+      width: 50% !important;
+      p {
+        font-size: 2rem;
+      }
+      .list_data_delete {
+        .list_text {
+          font-size: 2rem;
+        }
+      }
+      .details {
+        width: 60% !important;
+        font-size: 2rem;
+      }
+    }
+    .clearfix {
+      width: 80% !important;
+    }
+  }
+}
