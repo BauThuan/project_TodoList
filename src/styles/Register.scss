@@ -141,43 +141,43 @@
   }
 }
 
-@media only screen and (min-width: 1025px) {
-  /* Đặt các quy tắc CSS cho desktop ở đây */
+// @media only screen and (min-width: 1025px) {
+//   /* Đặt các quy tắc CSS cho desktop ở đây */
 
-  .register_container {
-    width: 100%;
-    .register_content {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 90%;
-      .form_register {
-        width: 70%;
-        h1 {
-          font-size: 3rem;
-        }
-        .input_ui {
-          width: 60%;
-          font-size: 2.5rem;
-        }
-        .icons {
-          top: 55%;
-          right: 20%;
-        }
-        .button_ui {
-          margin-top: 10px;
-          font-size: 2rem;
-        }
-        .titile_notification {
-          font-size: 1.5rem;
-        }
-        .home_comeback {
-          margin-top: 10px;
-          font-size: 1.9rem;
-          text-decoration: underline;
-          padding-bottom: 5px;
-        }
-      }
-    }
-  }
-}
+//   .register_container {
+//     width: 100%;
+//     .register_content {
+//       display: flex;
+//       align-items: center;
+//       justify-content: center;
+//       width: 90%;
+//       .form_register {
+//         width: 70%;
+//         h1 {
+//           font-size: 3rem;
+//         }
+//         .input_ui {
+//           width: 60%;
+//           font-size: 2.5rem;
+//         }
+//         .icons {
+//           top: 55%;
+//           right: 20%;
+//         }
+//         .button_ui {
+//           margin-top: 10px;
+//           font-size: 2rem;
+//         }
+//         .titile_notification {
+//           font-size: 1.5rem;
+//         }
+//         .home_comeback {
+//           margin-top: 10px;
+//           font-size: 1.9rem;
+//           text-decoration: underline;
+//           padding-bottom: 5px;
+//         }
+//       }
+//     }
+//   }
+// }

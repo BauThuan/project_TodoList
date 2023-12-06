@@ -151,43 +151,43 @@
     }
   }
 }
-@media only screen and (min-width: 1025px) {
-  /* Đặt các quy tắc CSS cho desktop ở đây */
-  .login_container {
-    width: 100%;
-    .login_content {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 90%;
-      .form_login {
-        width: 70%;
-        h1 {
-          font-size: 3rem;
-        }
-        .input_ui {
-          width: 60%;
-          font-size: 2.5rem;
-        }
-        .icons {
-          top: 36%;
-          right: 20%;
-          font-size: 3rem;
-        }
-        .button_ui {
-          margin-top: 20px;
-          font-size: 2.5rem;
-        }
-        .titile_notification {
-          font-size: 2.5rem;
-        }
-        .home_comeback {
-          margin-top: -5px;
-          font-size: 2.5rem;
-          text-decoration: underline;
-          padding-bottom: 5px;
-        }
-      }
-    }
-  }
-}
+// @media only screen and (min-width: 1025px) {
+//   /* Đặt các quy tắc CSS cho desktop ở đây */
+//   .login_container {
+//     width: 100%;
+//     .login_content {
+//       display: flex;
+//       align-items: center;
+//       justify-content: center;
+//       width: 90%;
+//       .form_login {
+//         width: 70%;
+//         h1 {
+//           font-size: 3rem;
+//         }
+//         .input_ui {
+//           width: 60%;
+//           font-size: 2.5rem;
+//         }
+//         .icons {
+//           top: 36%;
+//           right: 20%;
+//           font-size: 3rem;
+//         }
+//         .button_ui {
+//           margin-top: 20px;
+//           font-size: 2.5rem;
+//         }
+//         .titile_notification {
+//           font-size: 2.5rem;
+//         }
+//         .home_comeback {
+//           margin-top: -5px;
+//           font-size: 2.5rem;
+//           text-decoration: underline;
+//           padding-bottom: 5px;
+//         }
+//       }
+//     }
+//   }
+// }
