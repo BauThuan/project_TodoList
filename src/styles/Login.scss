@@ -73,3 +73,79 @@
     }
   }
 }
+
+@media only screen and (max-width: 600px) {
+  .login_container {
+    width: 100%;
+    .login_content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 90%;
+      .form_login {
+        width: 350px;
+        h1 {
+          font-size: 2rem;
+        }
+        .input_ui {
+          width: 60%;
+        }
+        .icons {
+          top: 35%;
+          right: 20%;
+        }
+        .button_ui {
+          margin-top: 10px;
+          font-size: 1.7rem;
+        }
+        .titile_notification {
+          font-size: 1.5rem;
+        }
+        .home_comeback {
+          margin-top: -5px;
+          font-size: 1.6rem;
+          text-decoration: underline;
+          padding-bottom: 5px;
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 601px) and (max-width: 1024px) {
+  .login_container {
+    width: 100%;
+    .login_content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 90%;
+      .form_login {
+        width: 70%;
+        h1 {
+          font-size: 2rem;
+        }
+        .input_ui {
+          width: 60%;
+        }
+        .icons {
+          top: 35%;
+          right: 20%;
+        }
+        .button_ui {
+          margin-top: 10px;
+          font-size: 1.7rem;
+        }
+        .titile_notification {
+          font-size: 1.5rem;
+        }
+        .home_comeback {
+          margin-top: -5px;
+          font-size: 1.6rem;
+          text-decoration: underline;
+          padding-bottom: 5px;
+        }
+      }
+    }
+  }
+}

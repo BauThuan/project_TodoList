@@ -40,6 +40,14 @@ function Header() {
             >
               Đăng nhập
             </p>
+            <p
+              className="login_title"
+              onClick={() => {
+                navigate("/register");
+              }}
+            >
+              Đăng ký
+            </p>
           </div>
         )}
       </div>

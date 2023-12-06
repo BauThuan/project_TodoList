@@ -64,6 +64,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      padding-bottom: 15px;
       button {
         background-image: linear-gradient(
           67.2deg,
@@ -81,6 +82,64 @@
           box-shadow: 0px 0px 3px #1e1d1d;
         }
       }
+    }
+  }
+}
+@media only screen and (max-width: 600px) {
+  .app_container {
+    .app_content {
+    }
+    .add_header {
+      .button_add {
+        .button_add_new {
+          font-size: 1.5rem;
+        }
+      }
+    }
+    .app_list {
+      .list_todo {
+        .list_job {
+        }
+        .function_icons {
+          width: 30%;
+          .icons_all {
+          }
+        }
+      }
+    }
+    .panigation {
+      padding-bottom: 15px;
+    }
+  }
+}
+@media only screen and (min-width: 601px) and (max-width: 1024px) {
+  .app_container {
+    .app_content {
+    }
+    .add_header {
+      .button_add {
+        .button_add_new {
+          font-size: 1.5rem;
+        }
+      }
+    }
+    .app_list {
+      .list_todo {
+        input {
+        }
+        .list_job {
+          font-size: 2rem;
+        }
+        .function_icons {
+          width: 15%;
+          .icons_all {
+            font-size: 2.5rem;
+          }
+        }
+      }
+    }
+    .panigation {
+      padding-bottom: 15px;
     }
   }
 }
