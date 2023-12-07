@@ -7,6 +7,7 @@ import { Helmet } from "react-helmet";
 import "../../styles/Login.scss";
 import axios from "axios";
 function Login() {
+  const [page, setPage] = useState(1);
   const navigate = useNavigate();
   const [showPass, setShowPass] = useState(false);
   const [info, setInfo] = useState({
@@ -36,9 +37,10 @@ function Login() {
       method: "POST",
       data: info,
     })
+      // fn dong goi, tra ve data,  tai su dung nhieu noi. => chua hooks cua react, them logic
       .then((res) => {
-        let token = res.data.jwt;
-        let user = res.data.user;
+        let token = res?.data?.jwt;
+        let user = res?.data?.user;
         localStorage.setItem("token", token);
         localStorage.setItem("user", user);
         toast.success("Đăng nhập thành công !");
@@ -53,6 +55,7 @@ function Login() {
       handleLogin();
     }
   };
+
   return (
     <>
       <Helmet>

@@ -1,8 +1,8 @@
 import { memo } from "react";
 import { FaSearch } from "react-icons/fa";
+import { useFetchGetApi } from "../../utils/useFetchGetApi";
 import "../../styles/Search.scss";
 function Search(props) {
-  console.log(">>> check search");
   const { setSearchTitle, handleSearch } = props;
   const handleEnterKeySearch = (event) => {
     if (event.key === "Enter") {

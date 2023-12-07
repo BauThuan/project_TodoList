@@ -3,7 +3,6 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import "../../styles/Modal.scss";
 function ModalDetails(props) {
-  console.log(">>> memo chaỵ vào đây ModalDetails");
   const { showModalDetails, handleHideModalDetails, useId } = props;
   const [useDetails, setUserDetails] = useState({});
   useEffect(() => {
@@ -12,7 +11,7 @@ function ModalDetails(props) {
       method: "GET",
     })
       .then((res) => {
-        setUserDetails(res.data.data.attributes.title);
+        setUserDetails(res?.data?.data?.attributes?.title);
       })
       .catch((error) => console.log(">>> check error", error));
   }, [useId]);
@@ -60,7 +59,7 @@ function ModalDetails(props) {
               <button
                 type="button"
                 onClick={() => handleHideModalDetails()}
-                class="cancelbtn"
+                className="cancelbtn"
               >
                 Cancel
               </button>

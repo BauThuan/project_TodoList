@@ -4,7 +4,6 @@ import { toast } from "react-toastify";
 // import "bootstrap/dist/css/bootstrap.min.css";
 import "../../styles/Modal.scss";
 function ModalAddNew(props) {
-  console.log(">>> memo chaỵ vào đây ModalAddNew");
   const { showModalAddNew, handleHideModalAddNew } = props;
   const [newTitle, setNewTitle] = useState("");
   const handleAddNewTitle = useCallback(() => {
@@ -21,6 +20,14 @@ function ModalAddNew(props) {
       },
     })
       .then((res) => {
+        if (!newTitle.trim()) {
+          toast.error("Vui lòng điền đầy đủ thông tin trước khi tạo mới !");
+          return;
+        }
+        if (newTitle.trim().length <= 3 || newTitle.trim().length > 100) {
+          toast.error("Ký tự truyền vào tối thiểu là 4 và không quá 100 !");
+          return;
+        }
         setNewTitle("");
         handleHideModalAddNew();
         toast.success(`Thêm mới ${newTitle} thành công !`);

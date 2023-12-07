@@ -11,7 +11,7 @@ function SelectTodoList(props) {
   useEffect(() => {
     setHideIcon(
       JSON.parse(localStorage.getItem("data"))?.find(
-        (element) => element.id === item.id
+        (element) => element.id === item?.id
       ) ? (
         <FaRegWindowClose />
       ) : (
@@ -25,21 +25,21 @@ function SelectTodoList(props) {
       onClick={() => {
         let local = JSON.parse(localStorage.getItem("data"));
         if (!local) {
-          toast.success(`Thêm thành công ${item?.attributes.title}`);
+          toast.success(`Thêm thành công ${item?.attributes?.title}`);
           setHideIcon(<FaRegWindowClose />);
           return localStorage.setItem(
             "data",
             JSON.stringify([{ ...item, select: true }])
           );
         }
-        if (local.find((element) => element.id === item.id)) {
-          toast.success(`Gỡ thành công ${item?.attributes.title}`);
+        if (local.find((element) => element.id === item?.id)) {
+          toast.success(`Gỡ thành công ${item?.attributes?.title}`);
           setHideIcon(<GrCheckboxSelected />);
           return localStorage.setItem(
             "data",
             JSON.stringify(
               local
-                .filter((element) => element.id !== item.id)
+                .filter((element) => element.id !== item?.id)
                 .map((element) => ({
                   ...element,
                   select: false,
@@ -48,7 +48,7 @@ function SelectTodoList(props) {
           );
         }
         setHideIcon(<FaRegWindowClose />);
-        toast.success(`Thêm thành công ${item?.attributes.title}`);
+        toast.success(`Thêm thành công ${item?.attributes?.title}`);
         localStorage.setItem(
           "data",
           JSON.stringify([...local, { ...item, select: true }])
