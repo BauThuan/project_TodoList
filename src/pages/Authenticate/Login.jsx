@@ -43,7 +43,7 @@ function Login() {
         let token = res?.data?.jwt;
         let user = res?.data?.user;
         localStorage.setItem("token", token);
-        localStorage.setItem("user", user);
+        localStorage.setItem("user", JSON.stringify(user));
         toast.success("Đăng nhập thành công !");
         navigate("/home");
       })
