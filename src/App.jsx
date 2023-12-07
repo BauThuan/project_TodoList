@@ -75,7 +75,6 @@ function App() {
         toast.error("Title không tồn tại !");
       });
   }, [searchTitle]);
-  console.log(">>> check token an cuoi", localStorage.getItem("token"));
   return (
     <>
       <Helmet>

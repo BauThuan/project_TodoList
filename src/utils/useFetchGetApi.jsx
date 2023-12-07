@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 export const useFetchGetApi = (URL) => {
+  /// CUSTOM HOOK GET API THỬ NGHIỆM
+  console.log(">>> check URL truyền lên", URL);
   const [data, setData] = useState([]);
   const [totalPage, setTotalPage] = useState();
   useEffect(() => {

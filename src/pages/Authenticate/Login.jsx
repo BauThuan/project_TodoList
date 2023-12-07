@@ -4,7 +4,7 @@ import { PostLoginService } from "../../config/AxiosService";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
-
+import { useFetchGetApi } from "../../utils/useFetchGetApi";
 import "../../styles/Login.scss";
 import axios from "axios";
 function Login() {
