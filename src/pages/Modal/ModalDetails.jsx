@@ -1,20 +1,22 @@
-import { useEffect, useState, memo } from "react";
+import { useEffect, useState, memo, useCallback } from "react";
 import { toast } from "react-toastify";
 import axios from "axios";
 import "../../styles/Modal.scss";
 function ModalDetails(props) {
+  console.log(">>> memo chaỵ vào đây ModalDetails");
   const { showModalDetails, handleHideModalDetails, useId } = props;
   const [useDetails, setUserDetails] = useState({});
   useEffect(() => {
     axios({
       url: `https://backoffice.nodemy.vn/api/tasks/${useId}?populate=*`,
       method: "GET",
-    }).then((res) => {
-      setUserDetails(res.data.data.attributes.title);
-    });
-    // .catch((error) => toast.error("Lấy dữ liệu thất bại !"));
+    })
+      .then((res) => {
+        setUserDetails(res.data.data.attributes.title);
+      })
+      .catch((error) => console.log(">>> check error", error));
   }, [useId]);
-  const handleConfirm = () => {
+  const handleConfirm = useCallback(() => {
     axios({
       url: `https://backoffice.nodemy.vn/api/tasks/${useId}`,
       method: "PUT",
@@ -35,7 +37,7 @@ function ModalDetails(props) {
         handleHideModalDetails();
         toast.error("Sửa data thất bại !");
       });
-  };
+  }, [useId]);
   const handleEnterKeySave = (event) => {
     if (event.key === "Enter") {
       handleConfirm();
@@ -44,8 +46,8 @@ function ModalDetails(props) {
   return (
     <>
       {showModalDetails && (
-        <div class="modal">
-          <div class="modal-content">
+        <div className="modal">
+          <div className="modal-content">
             <p>Detail Todo List</p>
             <input
               type="text"
@@ -54,7 +56,7 @@ function ModalDetails(props) {
               className="details"
               onKeyDown={(e) => handleEnterKeySave(e)}
             />
-            <div class="clearfix">
+            <div className="clearfix">
               <button
                 type="button"
                 onClick={() => handleHideModalDetails()}
@@ -62,7 +64,11 @@ function ModalDetails(props) {
               >
                 Cancel
               </button>
-              <button type="button" onClick={handleConfirm} class="deletebtn">
+              <button
+                type="button"
+                onClick={handleConfirm}
+                className="deletebtn"
+              >
                 Save
               </button>
             </div>

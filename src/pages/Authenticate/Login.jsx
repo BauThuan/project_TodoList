@@ -40,7 +40,7 @@ function Login() {
         let token = res.data.jwt;
         let user = res.data.user;
         localStorage.setItem("token", token);
-        localStorage.setItem("user", JSON.stringify(user));
+        localStorage.setItem("user", user);
         toast.success("Đăng nhập thành công !");
         navigate("/home");
       })
@@ -48,7 +48,6 @@ function Login() {
         toast.error("Tài khoản hoặc mật khẩu không chính xác !")
       );
   };
-
   const handleEnterKeyPress = (event) => {
     if (event.key === "Enter") {
       handleLogin();

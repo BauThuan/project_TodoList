@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { Helmet } from "react-helmet";
 import { FiEdit } from "react-icons/fi";
 import { MdDeleteOutline } from "react-icons/md";
@@ -41,22 +41,26 @@ function App() {
     }
   }, [page, searchTitle]);
   useEffect(() => {
-    window.scrollTo(0, 0);
-    setQuery({
-      page: page,
-    });
-    handleGetApiTodoList();
-  }, [showModal, showModalAddNew, showModalDelete, status]);
-  const handleHideModalDetails = () => {
+    if (showModalDelete === false && searchTitle === "") {
+      window.scrollTo(0, 0);
+      setQuery({
+        page: page,
+      });
+      handleGetApiTodoList();
+    }
+  }, [showModal, showModalAddNew, showModalDelete]);
+
+  const handleHideModalDetails = useCallback(() => {
     setShowModal(false);
-  };
-  const handleHideModalAddNew = () => {
+  }, [showModal]);
+  const handleHideModalAddNew = useCallback(() => {
     setShowModalAddNew(false);
-  };
-  const handleHideModalDelete = () => {
+  }, [showModalAddNew]);
+  const handleHideModalDelete = useCallback(() => {
     setShowModalDelete(false);
-  };
-  const handleSearchTitle = () => {
+  }, [showModalDelete]);
+
+  const handleSearchTitle = useCallback(() => {
     axios({
       url: `https://backoffice.nodemy.vn/api/tasks?pagination[page]=1&pagination[pageSize]=5&filters[title][$contains]=${searchTitle}`,
     })
@@ -70,8 +74,8 @@ function App() {
       .catch((error) => {
         toast.error("Title không tồn tại !");
       });
-  };
-  console.log(">>> check data", data);
+  }, [searchTitle]);
+
   return (
     <>
       <Helmet>
@@ -102,7 +106,7 @@ function App() {
               data.map((item, index) => {
                 return (
                   <div key={`index ${index}`} className="list_todo">
-                    <input type="checkbox" checked={item.attributes.complete} />
+                    <input type="checkbox" />
                     <div className="list_job">{item?.attributes.title}</div>
                     <div className="function_icons">
                       <SelectTodoList item={item} />
@@ -158,6 +162,7 @@ function App() {
         handleHideModalAddNew={handleHideModalAddNew}
       />
       <ModalDelete
+        setSearchTitle={setSearchTitle}
         showModalDelete={showModalDelete}
         handleHideModalDelete={handleHideModalDelete}
         deleteItem={deleteItem}

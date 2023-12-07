@@ -4,7 +4,9 @@ import axios from "axios";
 import "../../styles/ModalDelete.scss";
 import { toast } from "react-toastify";
 function ModalDelete(props) {
-  const { showModalDelete, handleHideModalDelete, deleteItem } = props;
+  console.log(">>> memo chaỵ vào đây ModalDelete");
+  const { setSearchTitle, showModalDelete, handleHideModalDelete, deleteItem } =
+    props;
   const handleDeleteTodoList = () => {
     axios({
       url: `https://backoffice.nodemy.vn/api/tasks/${deleteItem.id}`,
@@ -14,9 +16,9 @@ function ModalDelete(props) {
       },
     })
       .then((res) => {
-        console.log(">>> check item res");
         let local = JSON.parse(localStorage.getItem("data"));
         if (local.find((element) => element.id === deleteItem.id)) {
+          setSearchTitle("");
           handleHideModalDelete();
           toast.success(`Xóa thành công ${deleteItem.attributes.title} !`);
           return localStorage.setItem(
@@ -26,6 +28,7 @@ function ModalDelete(props) {
             )
           );
         }
+        setSearchTitle("");
         handleHideModalDelete();
         toast.success(`Xóa thành công ${deleteItem.attributes.title} !`);
       })
@@ -45,7 +48,7 @@ function ModalDelete(props) {
                 Đồng ý xóa {deleteItem.attributes.title}{" "}
               </p>
             </div>
-            <div class="clearfix">
+            <div className="clearfix">
               <button
                 type="button"
                 onClick={() => {

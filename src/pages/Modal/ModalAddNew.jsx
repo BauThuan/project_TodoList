@@ -1,11 +1,13 @@
 import axios from "axios";
-import { useEffect, useState, memo } from "react";
+import { useEffect, useState, memo, useCallback } from "react";
 import { toast } from "react-toastify";
+// import "bootstrap/dist/css/bootstrap.min.css";
 import "../../styles/Modal.scss";
 function ModalAddNew(props) {
+  console.log(">>> memo chaỵ vào đây ModalAddNew");
   const { showModalAddNew, handleHideModalAddNew } = props;
   const [newTitle, setNewTitle] = useState("");
-  const handleAddNewTitle = () => {
+  const handleAddNewTitle = useCallback(() => {
     axios({
       url: "https://backoffice.nodemy.vn/api/tasks",
       method: "POST",
@@ -28,7 +30,7 @@ function ModalAddNew(props) {
         handleHideModalAddNew();
         toast.error(`Thêm mới ${newTitle} thất bại !`);
       });
-  };
+  }, [newTitle]);
 
   const handleKeyDownEnter = (event) => {
     if (event.key === "Enter") {
@@ -50,7 +52,7 @@ function ModalAddNew(props) {
               onChange={(e) => setNewTitle(e.target.value)}
               onKeyDown={(e) => handleKeyDownEnter(e)}
             />
-            <div class="clearfix">
+            <div className="clearfix">
               <button
                 type="button"
                 className="cancelbtn"

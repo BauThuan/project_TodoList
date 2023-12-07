@@ -11,7 +11,7 @@ import Footer from "./components/UserInterface/Footer.jsx";
 import ModalDetails from "./pages/Modal/ModalDetails.jsx";
 import LogoHomePage from "./pages/LogoHomePage/LogoHomePage.jsx";
 import "react-toastify/dist/ReactToastify.css";
-// import "bootstrap/dist/css/bootstrap.min.css";
+
 import "./styles/Index.scss";
 
 const router = createBrowserRouter([
