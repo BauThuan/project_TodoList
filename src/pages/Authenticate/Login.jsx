@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
 import { PostLoginService } from "../../config/AxiosService";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
+
 import "../../styles/Login.scss";
 import axios from "axios";
 function Login() {
@@ -55,7 +56,12 @@ function Login() {
       handleLogin();
     }
   };
-
+  useEffect(() => {
+    let local = localStorage.getItem("token");
+    if (local) {
+      navigate("/home");
+    }
+  }, []);
   return (
     <>
       <Helmet>
