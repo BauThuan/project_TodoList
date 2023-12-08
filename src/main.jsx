@@ -13,7 +13,6 @@ import LogoHomePage from "./pages/LogoHomePage/LogoHomePage.jsx";
 import "react-toastify/dist/ReactToastify.css";
 
 import "./styles/Index.scss";
-
 const router = createBrowserRouter([
   {
     path: "/",

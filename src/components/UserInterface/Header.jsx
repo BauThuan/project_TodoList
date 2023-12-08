@@ -1,10 +1,16 @@
 import { useNavigate } from "react-router-dom";
 import { AiFillCaretDown } from "react-icons/ai";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "../../styles/Header.scss";
 import { toast } from "react-toastify";
 function Header() {
   const navigate = useNavigate();
+  useEffect(() => {
+    let local = localStorage.getItem("token");
+    if (local) {
+      navigate("home");
+    }
+  }, []);
   return (
     <>
       <div className="header_container">
