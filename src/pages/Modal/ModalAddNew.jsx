@@ -7,6 +7,14 @@ function ModalAddNew(props) {
   const { showModalAddNew, handleHideModalAddNew } = props;
   const [newTitle, setNewTitle] = useState("");
   const handleAddNewTitle = useCallback(() => {
+    if (!newTitle.trim()) {
+      toast.error("Vui lòng điền đầy đủ thông tin trước khi tạo mới !");
+      return;
+    }
+    if (newTitle.trim().length <= 3 || newTitle.trim().length > 100) {
+      toast.error("Ký tự truyền vào tối thiểu là 4 và không quá 100 !");
+      return;
+    }
     axios({
       url: "https://backoffice.nodemy.vn/api/tasks",
       method: "POST",
@@ -20,22 +28,18 @@ function ModalAddNew(props) {
       },
     })
       .then((res) => {
-        if (!newTitle.trim()) {
-          toast.error("Vui lòng điền đầy đủ thông tin trước khi tạo mới !");
-          return;
+        if (res?.status === 200 && res?.statusText === "OK") {
+          setNewTitle("");
+          handleHideModalAddNew();
+          toast.success(`Thêm mới ${newTitle} thành công !`);
+        } else {
+          setNewTitle("");
+          handleHideModalAddNew();
+          toast.error(`Thêm mới ${newTitle} thất bại !`);
         }
-        if (newTitle.trim().length <= 3 || newTitle.trim().length > 100) {
-          toast.error("Ký tự truyền vào tối thiểu là 4 và không quá 100 !");
-          return;
-        }
-        setNewTitle("");
-        handleHideModalAddNew();
-        toast.success(`Thêm mới ${newTitle} thành công !`);
       })
       .catch((error) => {
-        setNewTitle("");
-        handleHideModalAddNew();
-        toast.error(`Thêm mới ${newTitle} thất bại !`);
+        console.log(">>> check error", error);
       });
   }, [newTitle]);
 
