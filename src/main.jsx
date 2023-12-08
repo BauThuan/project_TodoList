@@ -9,7 +9,6 @@ import Register from "./pages/Authenticate/Register.jsx";
 import Header from "./components/UserInterface/Header.jsx";
 import Footer from "./components/UserInterface/Footer.jsx";
 import ModalDetails from "./pages/Modal/ModalDetails.jsx";
-import LogoHomePage from "./pages/LogoHomePage/LogoHomePage.jsx";
 import "react-toastify/dist/ReactToastify.css";
 
 import "./styles/Index.scss";

@@ -23,6 +23,7 @@ function App() {
   const [page, setPage] = useState(1);
   const [query, setQuery] = useSearchParams();
   const [totalPage, setTotalPage] = useState();
+
   const handleGetApiTodoList = () => {
     axios({
       url: `https://backoffice.nodemy.vn/api/tasks?=&sort[0]=createdAt:desc&pagination[page]=${page}`,
@@ -31,6 +32,37 @@ function App() {
       setTotalPage(res?.data?.meta?.pagination?.pageCount);
     });
   };
+
+  const handleSearchTitle = useCallback(() => {
+    if (!searchTitle.trim()) {
+      toast.error("Điền đầy đủ thông tin tìm kiếm !");
+      return;
+    }
+    axios({
+      url: `https://backoffice.nodemy.vn/api/tasks?pagination[page]=1&pagination[pageSize]=5&filters[title][$contains]=${searchTitle}`,
+    })
+      .then((res) => {
+        if (res?.data?.data && res?.data?.data.length > 0) {
+          setData(res?.data?.data);
+        } else {
+          setData([]);
+        }
+      })
+      .catch((error) => {
+        toast.error("Title không tồn tại !");
+      });
+  }, [searchTitle]);
+
+  const handleHideModalDetails = useCallback(() => {
+    setShowModal(false);
+  }, []);
+  const handleHideModalAddNew = useCallback(() => {
+    setShowModalAddNew(false);
+  }, []);
+  const handleHideModalDelete = useCallback(() => {
+    setShowModalDelete(false);
+  }, []);
+
   useEffect(() => {
     if (searchTitle === "") {
       window.scrollTo(0, 0);
@@ -49,32 +81,6 @@ function App() {
       handleGetApiTodoList();
     }
   }, [showModal, showModalAddNew, showModalDelete]);
-
-  const handleHideModalDetails = useCallback(() => {
-    setShowModal(false);
-  }, [showModal]);
-  const handleHideModalAddNew = useCallback(() => {
-    setShowModalAddNew(false);
-  }, [showModalAddNew]);
-  const handleHideModalDelete = useCallback(() => {
-    setShowModalDelete(false);
-  }, [showModalDelete]);
-
-  const handleSearchTitle = useCallback(() => {
-    axios({
-      url: `https://backoffice.nodemy.vn/api/tasks?pagination[page]=1&pagination[pageSize]=5&filters[title][$contains]=${searchTitle}`,
-    })
-      .then((res) => {
-        if (res?.data?.data && res?.data?.data.length > 0) {
-          setData(res?.data?.data);
-        } else {
-          setData([]);
-        }
-      })
-      .catch((error) => {
-        toast.error("Title không tồn tại !");
-      });
-  }, [searchTitle]);
   return (
     <>
       <Helmet>

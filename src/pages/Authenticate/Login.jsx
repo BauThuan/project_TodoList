@@ -1,59 +1,17 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
-import { PostLoginService } from "../../config/AxiosService";
-import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
-import { useFetchGetApi } from "../../utils/useFetchGetApi";
+import { handleLogin } from "../../utils/utilsAuthenticate";
 import "../../styles/Login.scss";
-import axios from "axios";
 function Login() {
-  const [page, setPage] = useState(1);
   const navigate = useNavigate();
   const [showPass, setShowPass] = useState(false);
-  const [info, setInfo] = useState({
-    identifier: "",
-    password: "",
-  });
-  const handleChange = (event) => {
-    let key = event.target.getAttribute("name");
-    setInfo({ ...info, [key]: event.target.value });
-  };
-  const handleLogin = () => {
-    const { identifier, password } = info;
-    if (!identifier.trim()) {
-      toast.error("Vui lòng điền đầy đủ email !");
-      return;
-    }
-    if (!password.trim()) {
-      toast.error("Vui lòng điền đầy đủ password !");
-      return;
-    }
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(identifier.trim())) {
-      toast.error("Định dạng email chưa đúng !");
-      return;
-    }
-    axios({
-      url: "https://backoffice.nodemy.vn/api/auth/local",
-      method: "POST",
-      data: info,
-    })
-      // fn dong goi, tra ve data,  tai su dung nhieu noi. => chua hooks cua react, them logic
-      .then((res) => {
-        let token = res?.data?.jwt;
-        let user = res?.data?.user;
-        localStorage.setItem("token", token);
-        localStorage.setItem("user", JSON.stringify(user));
-        toast.success("Đăng nhập thành công !");
-        navigate("/home");
-      })
-      .catch((error) =>
-        toast.error("Tài khoản hoặc mật khẩu không chính xác !")
-      );
-  };
+  const identifierRef = useRef(null);
+  const passwordRef = useRef(null);
   const handleEnterKeyPress = (event) => {
     if (event.key === "Enter") {
-      handleLogin();
+      handleLogin(identifierRef, passwordRef, navigate);
     }
   };
   useEffect(() => {
@@ -74,15 +32,13 @@ function Login() {
             <h1>Đăng nhập</h1>
             <input
               className="input_ui"
-              name="identifier"
-              onChange={(e) => handleChange(e)}
+              ref={identifierRef}
               type="text"
               onKeyDown={(e) => handleEnterKeyPress(e)}
             />
             <input
               className="input_ui"
-              name="password"
-              onChange={(e) => handleChange(e)}
+              ref={passwordRef}
               type={showPass ? "text" : "password"}
               onKeyDown={(e) => handleEnterKeyPress(e)}
             />
@@ -99,7 +55,12 @@ function Login() {
                 className="icons"
               />
             )}
-            <button className="button_ui" onClick={handleLogin}>
+            <button
+              className="button_ui"
+              onClick={() => {
+                handleLogin(identifierRef, passwordRef, navigate);
+              }}
+            >
               Đăng nhập
             </button>
             <p className="titile_notification">
