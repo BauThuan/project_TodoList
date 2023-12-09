@@ -1,15 +1,15 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 import { Helmet } from "react-helmet";
 import { FiEdit } from "react-icons/fi";
 import { MdDeleteOutline } from "react-icons/md";
-import { toast } from "react-toastify";
 import { useSearchParams } from "react-router-dom";
+import { useFetchGetApi } from "./utils/useFetchApi";
+import { handleCreateArrTotalPage } from "./utils/utlisCreateArrTotalPage";
 import ModalDetails from "./pages/Modal/ModalDetails";
 import ModalAddNew from "./pages/Modal/ModalAddNew";
 import ModalDelete from "./pages/Modal/ModalDelete";
 import SelectTodoList from "./components/SelectTodoList/SelectTodoList";
 import Search from "./components/Search/Search";
-import axios from "axios";
 import "./styles/App.scss";
 
 function App() {
@@ -17,41 +17,27 @@ function App() {
   const [showModalAddNew, setShowModalAddNew] = useState(false);
   const [showModalDelete, setShowModalDelete] = useState(false);
   const [searchTitle, setSearchTitle] = useState("");
-  const [data, setData] = useState([]);
   const [deleteItem, setDeleteItem] = useState({});
   const [userId, setUserId] = useState();
   const [page, setPage] = useState(1);
   const [query, setQuery] = useSearchParams();
-  const [totalPage, setTotalPage] = useState();
-
-  const handleGetApiTodoList = () => {
-    axios({
-      url: `https://backoffice.nodemy.vn/api/tasks?=&sort[0]=createdAt:desc&pagination[page]=${page}`,
-    }).then((res) => {
-      setData(res?.data?.data);
-      setTotalPage(res?.data?.meta?.pagination?.pageCount);
-    });
-  };
-
-  const handleSearchTitle = useCallback(() => {
-    if (!searchTitle.trim()) {
-      toast.error("Điền đầy đủ thông tin tìm kiếm !");
-      return;
+  const idTime = useRef();
+  const [data, totalPage] = useFetchGetApi({
+    page,
+    filters: { title: searchTitle },
+  });
+  const handleSearch = (event) => {
+    if (idTime.current) {
+      clearTimeout(idTime.current);
     }
-    axios({
-      url: `https://backoffice.nodemy.vn/api/tasks?pagination[page]=1&pagination[pageSize]=5&filters[title][$contains]=${searchTitle}`,
-    })
-      .then((res) => {
-        if (res?.data?.data && res?.data?.data.length > 0) {
-          setData(res?.data?.data);
-        } else {
-          setData([]);
-        }
-      })
-      .catch((error) => {
-        toast.error("Title không tồn tại !");
-      });
-  }, [searchTitle]);
+    idTime.current = setTimeout(() => {
+      if (event.trim() !== "") {
+        setSearchTitle(event);
+      } else {
+        setSearchTitle("");
+      }
+    }, 500);
+  };
 
   const handleHideModalDetails = useCallback(() => {
     setShowModal(false);
@@ -62,27 +48,25 @@ function App() {
   const handleHideModalDelete = useCallback(() => {
     setShowModalDelete(false);
   }, []);
-
   useEffect(() => {
     if (searchTitle === "") {
       window.scrollTo(0, 0);
       setQuery({
         page: page,
       });
-      handleGetApiTodoList();
     }
   }, [page, searchTitle]);
-  useEffect(() => {
-    if (showModalDelete === false && searchTitle === "") {
-      window.scrollTo(0, 0);
-      setQuery({
-        page: page,
-      });
-      handleGetApiTodoList();
-    }
-  }, [showModal, showModalAddNew, showModalDelete]);
+  // useEffect(() => {
+  //   if (showModalDelete === false && searchTitle === "") {
+  //     window.scrollTo(0, 0);
+  //     setQuery({
+  //       page: page,
+  //     });
+  //   }
+  // }, [showModal, showModalAddNew, showModalDelete]);
   return (
     <>
+      {console.log("re-render", page)}
       <Helmet>
         <meta charSet="utf-8" />
         <title>Trang chủ</title>
@@ -92,10 +76,7 @@ function App() {
           <h1>Todo List</h1>
         </div>
         <div className="add_header">
-          <Search
-            setSearchTitle={setSearchTitle}
-            handleSearch={handleSearchTitle}
-          />
+          <Search handleSearch={handleSearch} />
           <div className="button_add">
             <button
               className="button_add_new"
@@ -139,15 +120,15 @@ function App() {
               </div>
             )}
             <div className="panigation">
-              {[...Array(totalPage).keys(totalPage)].map((page, index) => {
+              {handleCreateArrTotalPage(totalPage).map((page, index) => {
                 return (
                   <button
                     key={`index ${index}`}
                     onClick={() => {
-                      setPage(page + 1);
+                      setPage(page);
                     }}
                   >
-                    {page + 1}
+                    {page}
                   </button>
                 );
               })}

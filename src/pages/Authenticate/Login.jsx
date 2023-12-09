@@ -3,17 +3,20 @@ import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { handleLogin } from "../../utils/utilsAuthenticate";
+import { useFetchGetApi } from "../../utils/useFetchApi";
 import "../../styles/Login.scss";
 function Login() {
   const navigate = useNavigate();
   const [showPass, setShowPass] = useState(false);
+  const [URL, setURL] = useState("");
   const identifierRef = useRef(null);
   const passwordRef = useRef(null);
+  const [page, setPage] = useState(1);
   const handleEnterKeyPress = (event) => {
     if (event.key === "Enter") {
       handleLogin(identifierRef, passwordRef, navigate);
     }
-  };
+  };  
   useEffect(() => {
     let local = localStorage.getItem("token");
     if (local) {
@@ -22,6 +25,13 @@ function Login() {
   }, []);
   return (
     <>
+      <button
+        onClick={() => {
+          setPage((prev) => prev + 1);
+        }}
+      >
+        Check
+      </button>
       <Helmet>
         <meta charSet="utf-8" />
         <title>Đăng nhập</title>

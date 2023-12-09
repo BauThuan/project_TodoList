@@ -46,7 +46,7 @@ export const handleRegister = (
 
 // LOGIN
 
-export const handleLogin = (identifierRef, passwordRef, navigate) => {
+export const handleLogin = async (identifierRef, passwordRef, navigate) => {
   if (!identifierRef.current.value.trim()) {
     toast.error("Vui lòng điền đầy đủ email !");
     return;
@@ -59,7 +59,7 @@ export const handleLogin = (identifierRef, passwordRef, navigate) => {
     toast.error("Định dạng email chưa đúng !");
     return;
   }
-  axios({
+  return axios({
     url: "https://backoffice.nodemy.vn/api/auth/local",
     method: "POST",
     data: {
@@ -74,7 +74,7 @@ export const handleLogin = (identifierRef, passwordRef, navigate) => {
         localStorage.setItem("token", token);
         localStorage.setItem("user", JSON.stringify(user));
         toast.success("Đăng nhập thành công !");
-        navigate("/home");
+        return {}
       } else {
         toast.error("Tài khoản hoặc mật khẩu không chính xác !");
       }
