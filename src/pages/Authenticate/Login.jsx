@@ -3,9 +3,7 @@ import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { handleLogin } from "../../utils/utilsAuthenticate";
-import { useFetchGetApi } from "../../utils/useFetchApi";
 import "../../styles/Login.scss";
-import axios from "axios";
 
 function Login() {
   const navigate = useNavigate();

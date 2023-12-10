@@ -2,11 +2,10 @@ import { useState, useEffect, useMemo } from "react";
 import axios from "axios";
 import { baseURL } from "../config/baseURL";
 /// CUSTOM HOOK GET API
-export const useFetchGetApi = ({
-  page,
-  filters = {},
-  sort = { createdAt: "desc" },
-}) => {
+export const useFetchGetApi = (
+  reRender,
+  { page, filters = {}, sort = { createdAt: "desc" } }
+) => {
   const [data, setData] = useState([]);
   const [totalPage, setTotalPage] = useState();
   let queryString = "";
@@ -44,6 +43,6 @@ export const useFetchGetApi = ({
       .catch((error) => {
         console.log(">>> check error", error);
       });
-  }, [completeURL]);
+  }, [completeURL, reRender]);
   return [data, totalPage];
 };

@@ -16,13 +16,14 @@ function App() {
   const [showModal, setShowModal] = useState(false);
   const [showModalAddNew, setShowModalAddNew] = useState(false);
   const [showModalDelete, setShowModalDelete] = useState(false);
+  const [reRender, setReRender] = useState(false);
   const [searchTitle, setSearchTitle] = useState("");
   const [deleteItem, setDeleteItem] = useState({});
   const [userId, setUserId] = useState();
   const [page, setPage] = useState(1);
   const [query, setQuery] = useSearchParams();
   const idTime = useRef();
-  const [data, totalPage] = useFetchGetApi({
+  const [data, totalPage] = useFetchGetApi(reRender, {
     page,
     filters: { title: searchTitle },
   });
@@ -48,16 +49,8 @@ function App() {
   const handleHideModalDelete = useCallback(() => {
     setShowModalDelete(false);
   }, []);
-
-  // useEffect(() => {
-  //   if (searchTitle === "") {
-  //     window.scrollTo(0, 0);
-  //     setQuery({
-  //       page: page,
-  //     });
-  //   }
-  // }, [page, searchTitle]);
   useEffect(() => {
+    setReRender(!reRender);
     setQuery({
       page: page,
     });
