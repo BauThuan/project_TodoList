@@ -48,25 +48,22 @@ function App() {
   const handleHideModalDelete = useCallback(() => {
     setShowModalDelete(false);
   }, []);
-  useEffect(() => {
-    if (searchTitle === "") {
-      window.scrollTo(0, 0);
-      setQuery({
-        page: page,
-      });
-    }
-  }, [page, searchTitle]);
+
   // useEffect(() => {
-  //   if (showModalDelete === false && searchTitle === "") {
+  //   if (searchTitle === "") {
   //     window.scrollTo(0, 0);
   //     setQuery({
   //       page: page,
   //     });
   //   }
-  // }, [showModal, showModalAddNew, showModalDelete]);
+  // }, [page, searchTitle]);
+  useEffect(() => {
+    setQuery({
+      page: page,
+    });
+  }, [showModal, showModalAddNew, showModalDelete]);
   return (
     <>
-      {console.log("re-render", page)}
       <Helmet>
         <meta charSet="utf-8" />
         <title>Trang chủ</title>

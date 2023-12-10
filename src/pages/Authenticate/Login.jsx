@@ -1,37 +1,31 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, memo } from "react";
 import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { handleLogin } from "../../utils/utilsAuthenticate";
 import { useFetchGetApi } from "../../utils/useFetchApi";
 import "../../styles/Login.scss";
+import axios from "axios";
+
 function Login() {
   const navigate = useNavigate();
   const [showPass, setShowPass] = useState(false);
-  const [URL, setURL] = useState("");
   const identifierRef = useRef(null);
   const passwordRef = useRef(null);
-  const [page, setPage] = useState(1);
   const handleEnterKeyPress = (event) => {
     if (event.key === "Enter") {
       handleLogin(identifierRef, passwordRef, navigate);
     }
-  };  
+  };
   useEffect(() => {
     let local = localStorage.getItem("token");
     if (local) {
       navigate("/home");
     }
   }, []);
+
   return (
     <>
-      <button
-        onClick={() => {
-          setPage((prev) => prev + 1);
-        }}
-      >
-        Check
-      </button>
       <Helmet>
         <meta charSet="utf-8" />
         <title>Đăng nhập</title>
@@ -74,7 +68,7 @@ function Login() {
               Đăng nhập
             </button>
             <p className="titile_notification">
-              Bạn chưa có tài khoản?{" "}
+              Bạn chưa có tài khoản?
               <b
                 className="resgister_route"
                 onClick={() => navigate("/register")}

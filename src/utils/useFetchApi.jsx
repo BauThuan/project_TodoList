@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import axios from "axios";
 import { baseURL } from "../config/baseURL";
 /// CUSTOM HOOK GET API
@@ -11,9 +11,9 @@ export const useFetchGetApi = ({
   const [totalPage, setTotalPage] = useState();
   let queryString = "";
   if (Object.keys(filters).length > 0) {
-    queryString += Object.keys(filters) // => ["pageSize", "pageIndex"] filter.pageSize   filter["pageSize"]
-      .map((key) => `filters[${key}][$contains]=${filters[key]}`) // => ["pageSize=10", "pageIndex=2"]
-      .join("&"); // => "pageIndex=10&pageIndex=2"
+    queryString += Object.keys(filters).map(
+      (key) => `filters[${key}][$contains]=${filters[key]}`
+    );
   }
   const defaultSort = { createdAt: "desc" };
   const isSortDifferent = JSON.stringify(sort) !== JSON.stringify(defaultSort);
@@ -31,7 +31,7 @@ export const useFetchGetApi = ({
   }
   let completeURL =
     queryString.length > 0 ? `${baseURL}?${queryString}` : baseURL;
-  console.log(completeURL);
+
   useEffect(() => {
     axios({
       url: completeURL,

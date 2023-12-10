@@ -2,6 +2,7 @@ import { useEffect, useState, memo, useCallback } from "react";
 import { toast } from "react-toastify";
 import axios from "axios";
 import "../../styles/Modal.scss";
+
 function ModalDetails(props) {
   const { showModalDetails, handleHideModalDetails, useId } = props;
   const [useDetails, setUserDetails] = useState({});
