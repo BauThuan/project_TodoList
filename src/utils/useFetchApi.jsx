@@ -8,6 +8,7 @@ export const useFetchGetApi = (
 ) => {
   const [data, setData] = useState([]);
   const [totalPage, setTotalPage] = useState();
+  const [loading, setLoading] = useState(true);
   let queryString = "";
   if (Object.keys(filters).length > 0) {
     queryString += Object.keys(filters).map(
@@ -25,8 +26,8 @@ export const useFetchGetApi = (
   if (page) {
     queryString +=
       queryString.length > 0
-        ? `&pagination[page]=${page}`
-        : `pagination[page]=${page}`;
+        ? `&pagination[page]=${page}&pagination[pageSize]=14`
+        : `pagination[page]=${page}&pagination[pageSize]=14`;
   }
   let completeURL =
     queryString.length > 0 ? `${baseURL}?${queryString}` : baseURL;
@@ -37,6 +38,7 @@ export const useFetchGetApi = (
       method: "GET",
     })
       .then((res) => {
+        setLoading(false);
         setData(res?.data?.data);
         setTotalPage(res?.data?.meta?.pagination?.pageCount);
       })
@@ -44,5 +46,5 @@ export const useFetchGetApi = (
         console.log(">>> check error", error);
       });
   }, [completeURL, reRender]);
-  return [data, totalPage];
+  return [data, loading, totalPage];
 };

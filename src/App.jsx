@@ -9,6 +9,7 @@ import ModalDetails from "./pages/Modal/ModalDetails";
 import ModalAddNew from "./pages/Modal/ModalAddNew";
 import ModalDelete from "./pages/Modal/ModalDelete";
 import SelectTodoList from "./components/SelectTodoList/SelectTodoList";
+import LoadingData from "./components/Loading/Loading";
 import Search from "./components/Search/Search";
 import "./styles/App.scss";
 
@@ -17,13 +18,14 @@ function App() {
   const [showModalAddNew, setShowModalAddNew] = useState(false);
   const [showModalDelete, setShowModalDelete] = useState(false);
   const [reRender, setReRender] = useState(false);
+
   const [searchTitle, setSearchTitle] = useState("");
   const [deleteItem, setDeleteItem] = useState({});
   const [userId, setUserId] = useState();
   const [page, setPage] = useState(1);
   const [query, setQuery] = useSearchParams();
   const idTime = useRef();
-  const [data, totalPage] = useFetchGetApi(reRender, {
+  const [data, loading, totalPage] = useFetchGetApi(reRender, {
     page,
     filters: { title: searchTitle },
   });
@@ -78,7 +80,9 @@ function App() {
         </div>
         {localStorage.getItem("token") ? (
           <div className="app_list">
-            {data.length > 0 ? (
+            {loading ? (
+              <LoadingData />
+            ) : data.length > 0 ? (
               data.map((item, index) => {
                 return (
                   <div key={`index ${index}`} className="list_todo">
