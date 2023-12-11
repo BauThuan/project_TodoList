@@ -74,7 +74,8 @@ export const handleLogin = async (identifierRef, passwordRef, navigate) => {
         localStorage.setItem("token", token);
         localStorage.setItem("user", JSON.stringify(user));
         toast.success("Đăng nhập thành công !");
-        return {}
+        navigate("/home");
+        return {};
       } else {
         toast.error("Tài khoản hoặc mật khẩu không chính xác !");
       }
