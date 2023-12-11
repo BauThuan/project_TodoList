@@ -12,7 +12,7 @@ export const useFetchGetApi = (
   let queryString = "";
   if (Object.keys(filters).length > 0) {
     queryString += Object.keys(filters).map(
-      (key) => `filters[${key}][$contains]=${filters[key]}`
+      (key) => `filters[${key}][$contains]=${filters[key]}&`
     );
   }
   const defaultSort = { createdAt: "desc" };
@@ -21,7 +21,7 @@ export const useFetchGetApi = (
     const sortString = Object.keys(sort)
       .map((key) => `sort[0]=${key}:${sort[key]}`)
       .join("&");
-    queryString += queryString.length > 0 ? `&${sortString}` : sortString;
+    queryString += queryString.length > 0 ? `${sortString}` : sortString;
   }
   if (page) {
     queryString +=
@@ -48,3 +48,7 @@ export const useFetchGetApi = (
   }, [completeURL, reRender]);
   return [data, loading, totalPage];
 };
+
+// ant desgin
+// react hook form
+// 

@@ -4,13 +4,13 @@ import { FiEdit } from "react-icons/fi";
 import { MdDeleteOutline } from "react-icons/md";
 import { useSearchParams } from "react-router-dom";
 import { useFetchGetApi } from "./utils/useFetchApi";
-import { handleCreateArrTotalPage } from "./utils/utlisCreateArrTotalPage";
 import ModalDetails from "./pages/Modal/ModalDetails";
 import ModalAddNew from "./pages/Modal/ModalAddNew";
 import ModalDelete from "./pages/Modal/ModalDelete";
 import SelectTodoList from "./components/SelectTodoList/SelectTodoList";
 import LoadingData from "./components/Loading/Loading";
 import Search from "./components/Search/Search";
+import Pagingnation from "./components/Paging/Pagingnation";
 import "./styles/App.scss";
 
 function App() {
@@ -18,7 +18,6 @@ function App() {
   const [showModalAddNew, setShowModalAddNew] = useState(false);
   const [showModalDelete, setShowModalDelete] = useState(false);
   const [reRender, setReRender] = useState(false);
-
   const [searchTitle, setSearchTitle] = useState("");
   const [deleteItem, setDeleteItem] = useState({});
   const [userId, setUserId] = useState();
@@ -113,20 +112,15 @@ function App() {
                 Không tìm thấy title nào !
               </div>
             )}
-            <div className="panigation">
-              {handleCreateArrTotalPage(totalPage).map((page, index) => {
-                return (
-                  <button
-                    key={`index ${index}`}
-                    onClick={() => {
-                      setPage(page);
-                    }}
-                  >
-                    {page}
-                  </button>
-                );
-              })}
-            </div>
+            <Pagingnation
+              totalPage={totalPage}
+              onClick={(i) => {
+                setQuery({
+                  page: i,
+                });
+                setPage(i);
+              }}
+            />
           </div>
         ) : (
           ""

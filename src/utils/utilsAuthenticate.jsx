@@ -41,7 +41,7 @@ export const handleRegister = (
         toast.error("Đăng ký tài khoản thất bại !");
       }
     })
-    .catch((error) => console.log(">>> check error", error.message));
+    .catch((error) => toast.error("Đăng ký tài khoản thất bại !"));
 };
 
 // LOGIN
@@ -80,5 +80,5 @@ export const handleLogin = async (identifierRef, passwordRef, navigate) => {
         toast.error("Tài khoản hoặc mật khẩu không chính xác !");
       }
     })
-    .catch((error) => console.log(">>> check error", error.message));
+    .catch((error) => toast.error("Tài khoản hoặc mật khẩu không chính xác !"));
 };
