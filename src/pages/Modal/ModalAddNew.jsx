@@ -5,14 +5,26 @@ import { toast } from "react-toastify";
 import "../../styles/Modal.scss";
 function ModalAddNew(props) {
   const { showModalAddNew, handleHideModalAddNew } = props;
-  const [newTitle, setNewTitle] = useState("");
+  const [newTitle, setNewTitle] = useState({
+    title: "",
+    date: "",
+  });
+
+  const handleChange = (key, event) => {
+    setNewTitle({ ...newTitle, [key]: event.target.value });
+  };
   const handleAddNewTitle = useCallback(() => {
-    if (!newTitle.trim()) {
+    const { title, date } = newTitle;
+    if (!title.trim()) {
       toast.error("Vui lòng điền đầy đủ thông tin trước khi tạo mới !");
       return;
     }
-    if (newTitle.trim().length <= 3 || newTitle.trim().length > 100) {
+    if (title.trim().length <= 3 || title.trim().length > 100) {
       toast.error("Ký tự truyền vào tối thiểu là 4 và không quá 100 !");
+      return;
+    }
+    if (!date.trim()) {
+      toast.error("Vui lòng điền đầy đủ thông tin date !");
       return;
     }
     axios({
@@ -20,7 +32,7 @@ function ModalAddNew(props) {
       method: "POST",
       data: {
         data: {
-          title: newTitle,
+          newTitle,
         },
       },
       headers: {
@@ -29,17 +41,23 @@ function ModalAddNew(props) {
     })
       .then((res) => {
         if (res?.status === 200 && res?.statusText === "OK") {
-          setNewTitle("");
+          setNewTitle({
+            title: "",
+            date: "",
+          });
           handleHideModalAddNew();
-          toast.success(`Thêm mới ${newTitle} thành công !`);
+          toast.success(`Thêm mới ${newTitle.title} thành công !`);
         } else {
-          setNewTitle("");
+          setNewTitle({
+            title: "",
+            date: "",
+          });
           handleHideModalAddNew();
-          toast.error(`Thêm mới ${newTitle} thất bại !`);
+          toast.error(`Thêm mới ${newTitle.title} thất bại !`);
         }
       })
       .catch((error) => {
-        console.log(">>> check error", error);
+        console.log(">>> check error", error.message);
       });
   }, [newTitle]);
 
@@ -50,6 +68,7 @@ function ModalAddNew(props) {
       handleHideModalAddNew();
     }
   };
+  console.log(">>> check title", newTitle);
   return (
     <>
       {showModalAddNew && (
@@ -58,9 +77,16 @@ function ModalAddNew(props) {
             <p>Add New Todo List</p>
             <input
               type="text"
+              name="title"
+              onChange={(e) => handleChange("title", e)}
               className="details"
-              value={newTitle}
-              onChange={(e) => setNewTitle(e.target.value)}
+              onKeyDown={(e) => handleKeyDownEnter(e)}
+            />
+            <input
+              type="date"
+              name="date"
+              className="details"
+              onChange={(e) => handleChange("date", e)}
               onKeyDown={(e) => handleKeyDownEnter(e)}
             />
             <div className="clearfix">

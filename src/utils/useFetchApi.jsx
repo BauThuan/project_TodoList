@@ -4,15 +4,16 @@ import { baseURL } from "../config/baseURL";
 /// CUSTOM HOOK GET API
 export const useFetchGetApi = (
   reRender,
-  { page, filters = {}, sort = { createdAt: "desc" } }
+  { useId, page, filters = {}, sort = { createdAt: "desc" } }
 ) => {
   const [data, setData] = useState([]);
   const [totalPage, setTotalPage] = useState();
   const [loading, setLoading] = useState(true);
   let queryString = "";
+  let completeURL = "";
   if (Object.keys(filters).length > 0) {
     queryString += Object.keys(filters).map(
-      (key) => `filters[${key}][$contains]=${filters[key]}&`
+      (key) => `filters[${key}][$contains]=${filters[key]}`
     );
   }
   const defaultSort = { createdAt: "desc" };
@@ -29,9 +30,15 @@ export const useFetchGetApi = (
         ? `&pagination[page]=${page}&pagination[pageSize]=14`
         : `pagination[page]=${page}&pagination[pageSize]=14`;
   }
-  let completeURL =
-    queryString.length > 0 ? `${baseURL}?${queryString}` : baseURL;
 
+  if (useId) {
+    completeURL = `${baseURL}/${useId}?populate=*`;
+  } else {
+    completeURL =
+      queryString.length > 0 ? `${baseURL}?${queryString}` : baseURL;
+  }
+
+  console.log(">>> check completeURL", completeURL);
   useEffect(() => {
     axios({
       url: completeURL,
@@ -51,4 +58,4 @@ export const useFetchGetApi = (
 
 // ant desgin
 // react hook form
-// 
+//

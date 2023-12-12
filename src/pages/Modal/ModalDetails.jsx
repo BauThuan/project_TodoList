@@ -6,6 +6,8 @@ import "../../styles/Modal.scss";
 function ModalDetails(props) {
   const { showModalDetails, handleHideModalDetails, useId } = props;
   const [useDetails, setUserDetails] = useState({});
+  const [timeDate, setTimeDate] = useState();
+  const [check, setCheck] = useState();
   useEffect(() => {
     axios({
       url: `https://backoffice.nodemy.vn/api/tasks/${useId}?populate=*`,
@@ -13,6 +15,8 @@ function ModalDetails(props) {
     })
       .then((res) => {
         setUserDetails(res?.data?.data?.attributes?.title);
+        setCheck(res?.data?.data?.attributes?.complete);
+        setTimeDate(res?.data?.data?.attributes?.date.split("T")[0]);
       })
       .catch((error) => console.log(">>> check error", error));
   }, [useId]);
@@ -23,6 +27,8 @@ function ModalDetails(props) {
       data: {
         data: {
           title: useDetails,
+          date: timeDate,
+          complete: check,
         },
       },
       headers: {
@@ -31,18 +37,24 @@ function ModalDetails(props) {
     })
       .then((res) => {
         handleHideModalDetails();
-        toast.success("Sửa data thành công !");
+        toast.success(`Cập nhật công việc ${useDetails} thành công !`);
+        setUserDetails();
+        setTimeDate();
+        setCheck();
       })
       .catch((error) => {
         handleHideModalDetails();
-        toast.error("Sửa data thất bại !");
+        toast.error(`Cập nhật công việc ${useDetails} thất bại !`);
+        console.log(">> check error", error.message);
       });
-  }, [useId]);
+  }, [useId, useDetails, timeDate, check]);
   const handleEnterKeySave = (event) => {
     if (event.key === "Enter") {
       handleConfirm();
     }
   };
+
+  // console.log(">>> check data", data);
   return (
     <>
       {showModalDetails && (
@@ -56,6 +68,31 @@ function ModalDetails(props) {
               className="details"
               onKeyDown={(e) => handleEnterKeySave(e)}
             />
+            <input
+              type="date"
+              value={timeDate}
+              onChange={(e) => setTimeDate(e.target.value)}
+              className="details"
+              onKeyDown={(e) => handleEnterKeySave(e)}
+            />
+            <div className="check_input">
+              <div>
+                <input
+                  type="checkbox"
+                  checked={check}
+                  onClick={() => setCheck(!check)}
+                />
+                <p className="check_text"> Hoàn thành</p>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  checked={!check}
+                  onClick={() => setCheck(!check)}
+                />
+                <p className="check_text"> Chưa hoàn thành</p>
+              </div>
+            </div>
             <div className="clearfix">
               <button
                 type="button"
