@@ -5,31 +5,33 @@ import "../../styles/Modal.scss";
 
 function ModalDetails(props) {
   const { showModalDetails, handleHideModalDetails, useId } = props;
-  const [useDetails, setUserDetails] = useState({});
-  const [timeDate, setTimeDate] = useState();
-  const [check, setCheck] = useState();
+  const [useUpdate, setUseUpdate] = useState({
+    title: "",
+    date: "",
+    complete: "",
+  });
   useEffect(() => {
     axios({
       url: `https://backoffice.nodemy.vn/api/tasks/${useId}?populate=*`,
       method: "GET",
     })
       .then((res) => {
-        setUserDetails(res?.data?.data?.attributes?.title);
-        setCheck(res?.data?.data?.attributes?.complete);
-        setTimeDate(res?.data?.data?.attributes?.date.split("T")[0]);
+        console.log("get");
+        setUseUpdate({
+          title: res?.data?.data?.attributes?.title,
+          date: res?.data?.data?.attributes?.date?.split("T")[0],
+          complete: res?.data?.data?.attributes?.complete,
+        });
       })
       .catch((error) => console.log(">>> check error", error));
   }, [useId]);
+
   const handleConfirm = useCallback(() => {
     axios({
       url: `https://backoffice.nodemy.vn/api/tasks/${useId}`,
       method: "PUT",
       data: {
-        data: {
-          title: useDetails,
-          date: timeDate,
-          complete: check,
-        },
+        data: useUpdate,
       },
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -37,24 +39,22 @@ function ModalDetails(props) {
     })
       .then((res) => {
         handleHideModalDetails();
-        toast.success(`Cập nhật công việc ${useDetails} thành công !`);
-        setUserDetails();
-        setTimeDate();
-        setCheck();
+        toast.success(`Cập nhật công việc ${useUpdate.title} thành công !`);
       })
       .catch((error) => {
         handleHideModalDetails();
-        toast.error(`Cập nhật công việc ${useDetails} thất bại !`);
+        toast.error(`Cập nhật công việc ${useUpdate.title} thất bại !`);
         console.log(">> check error", error.message);
       });
-  }, [useId, useDetails, timeDate, check]);
+  }, [useId, useUpdate.title, useUpdate.date, useUpdate.complete]);
+
   const handleEnterKeySave = (event) => {
     if (event.key === "Enter") {
       handleConfirm();
     }
   };
 
-  // console.log(">>> check data", data);
+  console.log(">>> check useUpdate", useUpdate);
   return (
     <>
       {showModalDetails && (
@@ -63,15 +63,19 @@ function ModalDetails(props) {
             <p>Detail Todo List</p>
             <input
               type="text"
-              value={useDetails}
-              onChange={(e) => setUserDetails(e.target.value)}
+              value={useUpdate.title}
+              onChange={(e) =>
+                setUseUpdate({ ...useUpdate, title: e.target.value })
+              }
               className="details"
               onKeyDown={(e) => handleEnterKeySave(e)}
             />
             <input
               type="date"
-              value={timeDate}
-              onChange={(e) => setTimeDate(e.target.value)}
+              value={useUpdate.date}
+              onChange={(e) =>
+                setUseUpdate({ ...useUpdate, date: e.target.value })
+              }
               className="details"
               onKeyDown={(e) => handleEnterKeySave(e)}
             />
@@ -79,16 +83,26 @@ function ModalDetails(props) {
               <div>
                 <input
                   type="checkbox"
-                  checked={check}
-                  onClick={() => setCheck(!check)}
+                  checked={useUpdate.complete}
+                  onClick={() =>
+                    setUseUpdate({
+                      ...useUpdate,
+                      complete: !useUpdate.complete,
+                    })
+                  }
                 />
                 <p className="check_text"> Hoàn thành</p>
               </div>
               <div>
                 <input
                   type="checkbox"
-                  checked={!check}
-                  onClick={() => setCheck(!check)}
+                  checked={!useUpdate.complete}
+                  onClick={() =>
+                    setUseUpdate({
+                      ...useUpdate,
+                      complete: !useUpdate.complete,
+                    })
+                  }
                 />
                 <p className="check_text"> Chưa hoàn thành</p>
               </div>

@@ -37,8 +37,6 @@ export const useFetchGetApi = (
     completeURL =
       queryString.length > 0 ? `${baseURL}?${queryString}` : baseURL;
   }
-
-  console.log(">>> check completeURL", completeURL);
   useEffect(() => {
     axios({
       url: completeURL,
