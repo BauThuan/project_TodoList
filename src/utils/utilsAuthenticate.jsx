@@ -1,5 +1,6 @@
 import axios from "axios";
 import { toast } from "react-toastify";
+import { PostLoginService, PostRegisterService } from "../config/serviceAxios";
 
 // REGISTER
 export const handleRegister = (
@@ -24,14 +25,10 @@ export const handleRegister = (
     toast.error("Định dạng email chưa đúng !");
     return;
   }
-  axios({
-    url: "https://backoffice.nodemy.vn/api/auth/local/register",
-    method: "POST",
-    data: {
-      username: userNameRef.current.value,
-      email: emailRef.current.value,
-      password: passwordRef.current.value,
-    },
+  PostRegisterService({
+    username: userNameRef.current.value,
+    email: emailRef.current.value,
+    password: passwordRef.current.value,
   })
     .then((res) => {
       if (res?.status === 200 && res?.statusText === "OK") {
@@ -59,13 +56,9 @@ export const handleLogin = async (identifierRef, passwordRef, navigate) => {
     toast.error("Định dạng email chưa đúng !");
     return;
   }
-  return axios({
-    url: "https://backoffice.nodemy.vn/api/auth/local",
-    method: "POST",
-    data: {
-      identifier: identifierRef.current.value,
-      password: passwordRef.current.value,
-    },
+  return PostLoginService({
+    identifier: identifierRef.current.value,
+    password: passwordRef.current.value,
   })
     .then((res) => {
       if (res?.status === 200 && res?.statusText === "OK") {
@@ -82,3 +75,13 @@ export const handleLogin = async (identifierRef, passwordRef, navigate) => {
     })
     .catch((error) => toast.error("Tài khoản hoặc mật khẩu không chính xác !"));
 };
+
+// axios({
+//   url: "https://backoffice.nodemy.vn/api/auth/local/register",
+//   method: "POST",
+//   data: {
+//     username: userNameRef.current.value,
+//     email: emailRef.current.value,
+//     password: passwordRef.current.value,
+//   },
+// });

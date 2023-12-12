@@ -1,19 +1,14 @@
 import { memo, useEffect, useRef } from "react";
+import { toast } from "react-toastify";
+import { DeleteTaskService } from "../../config/serviceAxios";
 import axios from "axios";
 import "../../styles/ModalDelete.scss";
-import { toast } from "react-toastify";
 function ModalDelete(props) {
   const deleteTitleRef = useRef();
   const { setSearchTitle, showModalDelete, handleHideModalDelete, deleteItem } =
     props;
   const handleDeleteTodoList = () => {
-    axios({
-      url: `https://backoffice.nodemy.vn/api/tasks/${deleteItem?.id}`,
-      method: "DELETE",
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-    })
+    DeleteTaskService(deleteItem?.id)
       .then((res) => {
         let local = JSON.parse(localStorage?.getItem("data"));
         if (local.find((element) => element.id === deleteItem?.id)) {

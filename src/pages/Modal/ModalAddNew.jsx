@@ -1,42 +1,25 @@
 import axios from "axios";
 import { useEffect, useState, memo, useCallback } from "react";
 import { toast } from "react-toastify";
-// import "bootstrap/dist/css/bootstrap.min.css";
+import { PostCreateTaskService } from "../../config/serviceAxios";
 import "../../styles/Modal.scss";
 function ModalAddNew(props) {
   const { showModalAddNew, handleHideModalAddNew } = props;
-  const [newTitle, setNewTitle] = useState({
-    title: "",
-    date: "",
-  });
-
-  const handleChange = (key, event) => {
-    setNewTitle({ ...newTitle, [key]: event.target.value });
-  };
+  const [newTitle, setNewTitle] = useState("");
   const handleAddNewTitle = useCallback(() => {
-    const { title, date } = newTitle;
-    if (!title.trim()) {
+    if (!newTitle.trim()) {
       toast.error("Vui lòng điền đầy đủ thông tin trước khi tạo mới !");
       return;
     }
-    if (title.trim().length <= 3 || title.trim().length > 100) {
+    if (newTitle.trim().length <= 3 || newTitle.trim().length > 100) {
       toast.error("Ký tự truyền vào tối thiểu là 4 và không quá 100 !");
       return;
     }
-    if (!date.trim()) {
-      toast.error("Vui lòng điền đầy đủ thông tin date !");
-      return;
-    }
-    axios({
-      url: "https://backoffice.nodemy.vn/api/tasks",
-      method: "POST",
+    PostCreateTaskService({
       data: {
         data: {
-          newTitle,
+          title: newTitle,
         },
-      },
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     })
       .then((res) => {
@@ -46,14 +29,14 @@ function ModalAddNew(props) {
             date: "",
           });
           handleHideModalAddNew();
-          toast.success(`Thêm mới ${newTitle.title} thành công !`);
+          toast.success(`Thêm mới ${newTitle} thành công !`);
         } else {
           setNewTitle({
             title: "",
             date: "",
           });
           handleHideModalAddNew();
-          toast.error(`Thêm mới ${newTitle.title} thất bại !`);
+          toast.error(`Thêm mới ${newTitle} thất bại !`);
         }
       })
       .catch((error) => {
@@ -68,7 +51,6 @@ function ModalAddNew(props) {
       handleHideModalAddNew();
     }
   };
-  console.log(">>> check title", newTitle);
   return (
     <>
       {showModalAddNew && (
@@ -78,15 +60,8 @@ function ModalAddNew(props) {
             <input
               type="text"
               name="title"
-              onChange={(e) => handleChange("title", e)}
+              onChange={(e) => setNewTitle(e.target.value)}
               className="details"
-              onKeyDown={(e) => handleKeyDownEnter(e)}
-            />
-            <input
-              type="date"
-              name="date"
-              className="details"
-              onChange={(e) => handleChange("date", e)}
               onKeyDown={(e) => handleKeyDownEnter(e)}
             />
             <div className="clearfix">

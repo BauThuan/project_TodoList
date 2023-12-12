@@ -1,8 +1,9 @@
 import { useEffect, useState, memo, useCallback } from "react";
 import { toast } from "react-toastify";
+import { useFetchGetApi } from "../../utils/useFetchApi";
+import { PutUpdateTaskService } from "../../config/serviceAxios";
 import axios from "axios";
 import "../../styles/Modal.scss";
-import { useFetchGetApi } from "../../utils/useFetchApi";
 
 function ModalDetails(props) {
   const { showModalDetails, handleHideModalDetails, useId } = props;
@@ -23,15 +24,8 @@ function ModalDetails(props) {
   }, [data]);
 
   const handleConfirm = useCallback(() => {
-    axios({
-      url: `https://backoffice.nodemy.vn/api/tasks/${useId}`,
-      method: "PUT",
-      data: {
-        data: useUpdate,
-      },
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
+    PutUpdateTaskService(useId, {
+      data: useUpdate,
     })
       .then((res) => {
         handleHideModalDetails();
@@ -49,9 +43,6 @@ function ModalDetails(props) {
       handleConfirm();
     }
   };
-
-  console.log(">>> check", useUpdate);
-
   return (
     <>
       {showModalDetails && (
