@@ -2,6 +2,7 @@ import { useEffect, useState, memo, useCallback } from "react";
 import { toast } from "react-toastify";
 import axios from "axios";
 import "../../styles/Modal.scss";
+import { useFetchGetApi } from "../../utils/useFetchApi";
 
 function ModalDetails(props) {
   const { showModalDetails, handleHideModalDetails, useId } = props;
@@ -10,21 +11,16 @@ function ModalDetails(props) {
     date: "",
     complete: "",
   });
+  let reRender = "asjdj";
+  const [data] = useFetchGetApi(reRender, { useId });
+
   useEffect(() => {
-    axios({
-      url: `https://backoffice.nodemy.vn/api/tasks/${useId}?populate=*`,
-      method: "GET",
-    })
-      .then((res) => {
-        console.log("get");
-        setUseUpdate({
-          title: res?.data?.data?.attributes?.title,
-          date: res?.data?.data?.attributes?.date?.split("T")[0],
-          complete: res?.data?.data?.attributes?.complete,
-        });
-      })
-      .catch((error) => console.log(">>> check error", error));
-  }, [useId]);
+    setUseUpdate({
+      title: data?.attributes?.title,
+      date: data?.attributes?.date?.split("T")[0],
+      complete: data?.attributes?.complete,
+    });
+  }, [data]);
 
   const handleConfirm = useCallback(() => {
     axios({
@@ -54,7 +50,8 @@ function ModalDetails(props) {
     }
   };
 
-  console.log(">>> check useUpdate", useUpdate);
+  console.log(">>> check", useUpdate);
+
   return (
     <>
       {showModalDetails && (
